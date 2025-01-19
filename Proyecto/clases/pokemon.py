@@ -23,6 +23,9 @@ class Pokemon:
     types = ['Agua', 'Planta', 'Eléctrico', 'Fantasma', 'Normal', 'Fuego', 'Tierra',
              'Hada', 'Dragón', 'Veneno', 'Acero', 'Siniestro', 'Roca', 'Bicho',
              'Volador', 'Psíquico', 'Lucha', 'Hielo']
+    
+    def __init__(self):
+        super().__init__() 
 
     def get_types(self):
         return self.types

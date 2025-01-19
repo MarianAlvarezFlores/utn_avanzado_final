@@ -1,4 +1,4 @@
-from tkinter import  Label, Button, Entry, Frame, filedialog, messagebox
+from tkinter import Label, Button, Entry, Frame, filedialog, messagebox
 import tkinter.commondialog
 from PIL import Image, ImageTk
 import base64

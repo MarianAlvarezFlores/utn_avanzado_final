@@ -101,7 +101,7 @@ class Pokemon:
             database.conexion.commit()
             return {"mensaje": f"{nombre} fue modificado correctamente."}
         else:
-            return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
+            return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
 
     @mostrar_mensaje(tipo="info", titulo="Error")
     def buscar_pokemon_por_nombre(self, nombre):

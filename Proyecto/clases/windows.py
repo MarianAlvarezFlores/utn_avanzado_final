@@ -4,8 +4,9 @@ from PIL import Image, ImageTk
 import base64
 from tkinter import ttk
 import tkinter
-from clases.pokemon import Pokemon
+from clases.pokemon import Pokemon, mostrar_mensaje
 import io
+from functools import wraps
 
 class Window(Frame):
     global_image_blob=None
@@ -178,13 +179,13 @@ class Window(Frame):
         for poke in pokemons:
             self.tree.insert("", "end", values=poke)
 
+    @mostrar_mensaje (tipo = "error", titulo = "Advertencia" ) 
     def modificar_pokemon(self):
         pokemon = Pokemon()
         types = pokemon.get_types()
         selected_item = self.tree.selection()
         if not selected_item:
-            messagebox.showwarning("Advertencia", "Por favor selecciona un Pokémon.")
-            return
+            return {"mensaje": "Por favor selecciona un Pokémon"}
 
         data_grid = self.tree.item(selected_item[0], "values")
         pokemon_data = pokemon.buscar_pokemon_por_nombre(data_grid[0])
@@ -255,18 +256,17 @@ class Window(Frame):
         button_save = tkinter.Button(new_window, text='Guardar', command=lambda: guardar_cambios())
         button_save.grid(row=9, column=1, columnspan=2, padx=15, pady=5)
 
+    @mostrar_mensaje (tipo = "error", titulo = "Advertencia" ) 
     def buscar_pokemon(self):
         nombre_pokemon = self.searchbar.get().strip()
         if not nombre_pokemon:
-            messagebox.showwarning("Advertencia", "Por favor, ingresa el nombre de un Pokémon para buscar.")
-            return
+            return {"mensaje": "Por favor, ingresa el nombre de un Pokémon para buscar"}
 
         pokemon = Pokemon()
         resultado = pokemon.buscar_pokemon_por_nombre(nombre_pokemon)
 
         if not resultado:
-            messagebox.showinfo("No encontrado", f"No se encontró ningún Pokémon llamado '{nombre_pokemon}'.")
-            return
+            return {"mensaje": f"No se encontró ningún Pokémon llamado '{nombre_pokemon}'"}
 
         new_window = tkinter.Toplevel(self.master)
         new_window.title(f"Detalles de {resultado[1]}")

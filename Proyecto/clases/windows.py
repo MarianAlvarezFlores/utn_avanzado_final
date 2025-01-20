@@ -8,6 +8,7 @@ from clases.pokemon import Pokemon, mostrar_mensaje
 import io
 from functools import wraps
 
+
 class Window(Frame):
     global_image_blob=None
 

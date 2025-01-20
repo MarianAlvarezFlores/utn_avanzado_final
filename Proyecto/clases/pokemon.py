@@ -3,6 +3,7 @@ from tkinter import messagebox, filedialog, PhotoImage
 import re
 import functools
 from functools import wraps
+from observador import Subject
 
 def mostrar_mensaje(tipo, titulo):
     def decorador(func):
@@ -19,7 +20,7 @@ def mostrar_mensaje(tipo, titulo):
         return wrapper
     return decorador
 
-class Pokemon:
+class Pokemon (Subject):
     types = ['Agua', 'Planta', 'Eléctrico', 'Fantasma', 'Normal', 'Fuego', 'Tierra',
              'Hada', 'Dragón', 'Veneno', 'Acero', 'Siniestro', 'Roca', 'Bicho',
              'Volador', 'Psíquico', 'Lucha', 'Hielo']
@@ -56,7 +57,7 @@ class Pokemon:
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?) 
             ''', (nombre, numero, tipo, tipo2, info, category, ability, global_image_blob))
             database.conexion.commit()
-            return {"mensaje": f"Añadiste a {nombre} correctamente."}
+            self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
         
     def get_pokemons(self):
         database = Database()
@@ -81,6 +82,7 @@ class Pokemon:
             return {"mensaje": f"El Pokémon {nombre} fue eliminado exitosamente de la Pokédex."}
         else:
             return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
+        self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
 
     @mostrar_mensaje(tipo="info", titulo="Resultado de la modificación")
     def modificar_pokemon(self, nombre, numero, tipo, tipo2, info, categoria, habilidad, global_image_blob):
@@ -105,6 +107,7 @@ class Pokemon:
             return {"mensaje": f"{nombre} fue modificado correctamente."}
         else:
             return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
+        self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
 
     @mostrar_mensaje(tipo="info", titulo="Error")
     def buscar_pokemon_por_nombre(self, nombre):

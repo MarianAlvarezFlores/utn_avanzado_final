@@ -28,18 +28,49 @@ class Observador:
     def update (self):
         raise NotImplementedError ("Delegación de actualización")
     
-class ObservadorConcretoA (Observador):
+class ObservadorConcretoAgregar (Observador):
     def __init__(self, object):
-        self.observado_a = object
-        self.observado_a.agregar (self)
+        self.observado_agregar = object
+        self.observado_agregar.agregar (self)
 
     def update (self):
-        print ("Actualización dentro de Observador ObservadorConcretoA")
-        self.estado = self.observado_a.get_estado ()
+        print ("Actualización dentro de Observador ObservadorConcretoAgregar")
+        self.estado = self.observado_agregar.get_estado ()
         print ("Estado = ", self.estado)
+
+class ObservadorConcretoModificar (Observador):
+    def __init__(self, object):
+        self.observado_modificar = object
+        self.observado_modificar.agregar (self)
+
+    def update (self):
+        print ("Actualización dentro de Observador ObservadorConcretoModificar")
+        self.estado = self.observado_modificar.get_estado ()
+        print ("Estado = ", self.estado)
+
+class ObservadorConcretoEliminar (Observador):
+    def __init__(self, object):
+        self.observado_eliminar = object
+        self.observado_eliminar.agregar (self)
+
+    def update (self):
+        print ("Actualización dentro de Observador ObservadorConcretoEliminar")
+        self.estado = self.observado_eliminar.get_estado ()
+        print ("Estado = ", self.estado)
+
 
 tema1 = PokemonConcreto ()
 
-observador_a = ObservadorConcretoA (tema1)
-tema1.set_estado (1)
+observador_a = ObservadorConcretoAgregar (tema1)
+tema1.set_estado ("Agregamos un pokemon con éxito")
+
+tema2 = PokemonConcreto ()
+
+observador_b = ObservadorConcretoModificar (tema2)
+tema2.set_estado ("modificamos un pokemon con éxito")
+
+tema3 = PokemonConcreto ()
+observador_c = ObservadorConcretoEliminar (tema3)
+tema3.set_estado ("Eliminamos un pokemon con éxito")
+
 

@@ -3,7 +3,7 @@ from tkinter import messagebox, filedialog, PhotoImage
 import re
 import functools
 from functools import wraps
-from observador import Subject
+from clases.observador import Subject, PokemonCollection
 
 def mostrar_mensaje(tipo, titulo):
     def decorador(func):
@@ -57,7 +57,8 @@ class Pokemon (Subject):
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?) 
             ''', (nombre, numero, tipo, tipo2, info, category, ability, global_image_blob))
             database.conexion.commit()
-            self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
+            self.notificar() # ACA INTENTAMOS EL PATRON OBSERVADOR Y LAS NOTIFICACIONES
+
         
     def get_pokemons(self):
         database = Database()
@@ -82,7 +83,6 @@ class Pokemon (Subject):
             return {"mensaje": f"El Pokémon {nombre} fue eliminado exitosamente de la Pokédex."}
         else:
             return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
-        self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
 
     @mostrar_mensaje(tipo="info", titulo="Resultado de la modificación")
     def modificar_pokemon(self, nombre, numero, tipo, tipo2, info, categoria, habilidad, global_image_blob):
@@ -107,7 +107,6 @@ class Pokemon (Subject):
             return {"mensaje": f"{nombre} fue modificado correctamente."}
         else:
             return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
-        self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
 
     @mostrar_mensaje(tipo="info", titulo="Error")
     def buscar_pokemon_por_nombre(self, nombre):

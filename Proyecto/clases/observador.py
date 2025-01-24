@@ -12,18 +12,23 @@ class Subject:
         for observador in self.observadores:
             observador.update()
 
-class PokemonConcreto (Subject):
+class PokemonCollection (Subject):
     def __init__(self):
         self.estado = None
     
-    def set_estado (self, value):
+    def set_estado(self, value, notificar=True):
         self.estado = value
-        self.notificar ()
+        if notificar:
+            self.notificar()
+    
+    # def set_estado (self, value):
+    #     self.estado = value
+    #     self.notificar ()
     
     def get_estado (self, ):
         return self.estado
 
-class Observador:
+class Observador (Subject):
 
     def update (self):
         raise NotImplementedError ("Delegación de actualización")
@@ -59,18 +64,18 @@ class ObservadorConcretoEliminar (Observador):
         print ("Estado = ", self.estado)
 
 
-tema1 = PokemonConcreto ()
+tema1 = PokemonCollection ()
 
 observador_a = ObservadorConcretoAgregar (tema1)
-tema1.set_estado ("Agregamos un pokemon con éxito")
+tema1.set_estado("Agregamos un pokemon con éxito", notificar=False)
 
-tema2 = PokemonConcreto ()
+# tema2 = PokemonCollection ()
 
-observador_b = ObservadorConcretoModificar (tema2)
-tema2.set_estado ("modificamos un pokemon con éxito")
+# observador_b = ObservadorConcretoModificar (tema2)
+# tema2.set_estado ("modificamos un pokemon con éxito")
 
-tema3 = PokemonConcreto ()
-observador_c = ObservadorConcretoEliminar (tema3)
-tema3.set_estado ("Eliminamos un pokemon con éxito")
+# tema3 = PokemonCollection ()
+# observador_c = ObservadorConcretoEliminar (tema3)
+# tema3.set_estado ("Eliminamos un pokemon con éxito")
 
 

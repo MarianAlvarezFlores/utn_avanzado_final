@@ -1,5 +1,7 @@
 import sqlite3
-class Database:
+from clases.observador import Subject, PokemonCollection
+
+class Database ():
 
     def __init__(self):
         self.conexion = sqlite3.connect('PokeappDB.db')
@@ -27,3 +29,4 @@ class Database:
                 )
             ''')
         self.conexion.commit()
+

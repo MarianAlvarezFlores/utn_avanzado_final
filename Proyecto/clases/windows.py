@@ -7,9 +7,10 @@ import tkinter
 from clases.pokemon import Pokemon, mostrar_mensaje
 import io
 from functools import wraps
+from clases.observador import Subject, PokemonCollection
 
 
-class Window(Frame):
+class Window(Frame, Subject):
     global_image_blob=None
 
     def init(self, master=None):
@@ -104,6 +105,8 @@ class Window(Frame):
         button_image.grid(row=9,column=1,padx=10,pady=5)
 
         self.load_grid() 
+        self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
+
         
     def cargar_imagen(self):
         """Función para cargar una imagen y convertirla en base64"""

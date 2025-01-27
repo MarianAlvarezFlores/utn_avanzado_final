@@ -21,10 +21,6 @@ class PokemonCollection (Subject):
         if notificar:
             self.notificar()
     
-    # def set_estado (self, value):
-    #     self.estado = value
-    #     self.notificar ()
-    
     def get_estado (self, ):
         return self.estado
 
@@ -77,5 +73,4 @@ tema1.set_estado("Agregamos un pokemon con éxito", notificar=False)
 # tema3 = PokemonCollection ()
 # observador_c = ObservadorConcretoEliminar (tema3)
 # tema3.set_estado ("Eliminamos un pokemon con éxito")
-
 

@@ -105,7 +105,7 @@ class Window(Frame, Subject):
         button_image.grid(row=9,column=1,padx=10,pady=5)
 
         self.load_grid() 
-        self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
+        # self.notificar () # ESTO INTENTA SER LA COMUNICACIÓN CON LOS OBSERVADORES
 
         
     def cargar_imagen(self):

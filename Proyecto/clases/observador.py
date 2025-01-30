@@ -1,4 +1,4 @@
-class Subject:
+class Subject: #esto equivale a tema
 
     observadores = []
 
@@ -12,7 +12,7 @@ class Subject:
         for observador in self.observadores:
             observador.update()
 
-class PokemonCollection (Subject):
+class PokemonCollection (Subject):   #esto equivale a tema concreto
     def __init__(self):
         self.estado = None
     
@@ -20,10 +20,6 @@ class PokemonCollection (Subject):
         self.estado = value
         if notificar:
             self.notificar()
-    
-    # def set_estado (self, value):
-    #     self.estado = value
-    #     self.notificar ()
     
     def get_estado (self, ):
         return self.estado
@@ -77,5 +73,3 @@ tema1.set_estado("Agregamos un pokemon con éxito", notificar=False)
 # tema3 = PokemonCollection ()
 # observador_c = ObservadorConcretoEliminar (tema3)
 # tema3.set_estado ("Eliminamos un pokemon con éxito")
-
-

@@ -57,7 +57,7 @@ class Pokemon (Subject):
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?) 
             ''', (nombre, numero, tipo, tipo2, info, category, ability, global_image_blob))
             database.conexion.commit()
-            self.notificar() # ACA INTENTAMOS EL PATRON OBSERVADOR Y LAS NOTIFICACIONES
+            self.notificar(nombre, numero, tipo, tipo2, info, category, ability) # ACA INTENTAMOS EL PATRON OBSERVADOR Y LAS NOTIFICACIONES
 
         
     def get_pokemons(self):

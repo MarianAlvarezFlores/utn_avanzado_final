@@ -1,4 +1,6 @@
-class Subject:
+from datetime import datetime
+
+class Subject: #esto equivale a tema
 
     observadores = []
 
@@ -8,36 +10,41 @@ class Subject:
     def quitar (self, object):
         pass
 
-    def notificar (self):
+    def notificar (self, *args):
         for observador in self.observadores:
-            observador.update()
+            observador.update(*args)
 
-class PokemonCollection (Subject):
+class PokemonCollection (Subject):   #esto equivale a tema concreto
     def __init__(self):
         self.estado = None
     
     def set_estado(self, value, notificar=True):
         self.estado = value
+        self.hora_estado = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if notificar:
             self.notificar()
     
-    def get_estado (self, ):
+    def get_estado (self ):
         return self.estado
+    
+    def get_hora_estado(self):  
+        return self.hora_estado
 
 class Observador (Subject):
 
-    def update (self):
+    def update (self, *args):
         raise NotImplementedError ("Delegación de actualización")
     
-class ObservadorConcretoAgregar (Observador):
+class ObservadorConcretoAgregar (Observador): #tomar este pbjeto de ejemplo para los demás observadores concretos
     def __init__(self, object):
         self.observado_agregar = object
         self.observado_agregar.agregar (self)
 
-    def update (self):
-        print ("Actualización dentro de Observador ObservadorConcretoAgregar")
+    def update (self, *args):
+        print ("Actualización dentro de Observador ObservadorConcretoAgregar", args)
         self.estado = self.observado_agregar.get_estado ()
-        print ("Estado = ", self.estado)
+        self.hora_estado = self.observado_agregar.get_hora_estado()  
+        print(f"Estado = {self.estado} | Hora = {self.hora_estado}") 
 
 class ObservadorConcretoModificar (Observador):
     def __init__(self, object):
@@ -73,4 +80,3 @@ tema1.set_estado("Agregamos un pokemon con éxito", notificar=False)
 # tema3 = PokemonCollection ()
 # observador_c = ObservadorConcretoEliminar (tema3)
 # tema3.set_estado ("Eliminamos un pokemon con éxito")
-

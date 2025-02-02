@@ -8,7 +8,19 @@ from clases.pokemon import Pokemon, mostrar_mensaje
 import io
 from functools import wraps
 from clases.observador import Subject, PokemonCollection
+import os, sys
 
+from pathlib import Path
+import subprocess
+import threading
+import time
+import datetime
+import socket
+import secrets
+import pprint
+import binascii
+
+theprocess=""
 
 class Window(Frame, Subject):
     global_image_blob=None
@@ -18,6 +30,8 @@ class Window(Frame, Subject):
         self.master = master        
         self.pack()
         self.widgets()
+        self.raiz = Path(file).resolve().parent
+        self.ruta_server = os.path.join(self.raiz, 'src', 'servidor', 'udp_server_t.py')
         
 
     def widgets(self):
@@ -195,7 +209,7 @@ class Window(Frame, Subject):
         if not data_grid:
             messagebox.showerror("Error", "No se pudo obtener la información del Pokémon.")
             return
-        print(pokemon_data[0])
+        #print(pokemon_data[0])
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Modificar Pokémon")
         new_window.geometry("280x350")
@@ -291,3 +305,27 @@ class Window(Frame, Subject):
                 image_label.pack(pady=10)
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo cargar la imagen: {e}")
+    
+    def try_connection(self, ): 
+
+        if theprocess != "":
+            theprocess.kill()
+            threading.Thread(target=self.lanzar_servidor, args=(True,), daemon=True).start()
+        else:
+            threading.Thread(target=self.lanzar_servidor, args=(True,), daemon=True).start()
+
+    def lanzar_servidor(self, var):
+
+        the_path =  self.ruta_server
+        if var==True:
+            global theprocess
+            theprocess = subprocess.Popen([sys.executable, the_path])
+            theprocess.communicate()
+        else:
+            print("")
+
+    def stop_server(self, ):
+
+        global theprocess
+        if theprocess !="":
+            theprocess.kill()

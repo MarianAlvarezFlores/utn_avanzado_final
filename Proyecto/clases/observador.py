@@ -51,10 +51,11 @@ class ObservadorConcretoModificar (Observador):
         self.observado_modificar = object
         self.observado_modificar.agregar (self)
 
-    def update (self):
-        print ("Actualización dentro de Observador ObservadorConcretoModificar")
+    def update (self, *args):
+        print ("Actualización dentro de Observador ObservadorConcretoModificar", args)
         self.estado = self.observado_modificar.get_estado ()
-        print ("Estado = ", self.estado)
+        self.hora_estado = self.observado_modificar.get_hora_estado()  
+        print(f"Estado = {self.estado} | Hora = {self.hora_estado}")
 
 class ObservadorConcretoEliminar (Observador):
     def __init__(self, object):
@@ -70,13 +71,13 @@ class ObservadorConcretoEliminar (Observador):
 tema1 = PokemonCollection ()
 
 observador_a = ObservadorConcretoAgregar (tema1)
-tema1.set_estado("Agregamos un pokemon con éxito", notificar=False)
+tema1.set_estado("Se agregó un pokemon con éxito", notificar=False)
 
 # tema2 = PokemonCollection ()
 
 # observador_b = ObservadorConcretoModificar (tema2)
-# tema2.set_estado ("modificamos un pokemon con éxito")
+# tema2.set_estado ("Se modificó un pokemon con éxito")
 
 # tema3 = PokemonCollection ()
 # observador_c = ObservadorConcretoEliminar (tema3)
-# tema3.set_estado ("Eliminamos un pokemon con éxito")
+# tema3.set_estado ("Se eliminó un pokemon con éxito")

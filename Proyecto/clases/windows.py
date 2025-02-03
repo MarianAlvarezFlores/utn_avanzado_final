@@ -57,6 +57,7 @@ class Window(Frame, Subject):
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Agregar Pokémon")
         new_window.geometry("350x450")
+        new_window.iconbitmap("media/Pokeball.ico")
         entry_nombre = tkinter.Entry(new_window)
         entry_nombre.grid(row=1, column=1, padx=10, pady=5)
         entry_numero = tkinter.Entry(new_window)
@@ -153,6 +154,7 @@ class Window(Frame, Subject):
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Eliminar Pokémon")
         new_window.geometry("280x150")
+        new_window.iconbitmap("media/Pokeball.ico")
 
         label_nombre = tkinter.Label(new_window, text="Nombre del Pokémon:")
         label_nombre.grid(row=1, column=0, padx=10, pady=5, columnspan=2)
@@ -199,6 +201,7 @@ class Window(Frame, Subject):
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Modificar Pokémon")
         new_window.geometry("340x450")
+        new_window.iconbitmap("media/Pokeball.ico")
 
         entry_nombre = tkinter.Entry(new_window)
         entry_nombre.grid(row=1, column=2, padx=10, pady=5)

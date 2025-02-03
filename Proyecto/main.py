@@ -9,9 +9,12 @@ if __name__ == "__main__":
     
     wind = Tk()
     wind.geometry("900x600")
-    app = Window(wind)
     wind.title("POKÉDEX ©")
+    wind.iconbitmap("media/Pokeball.ico")
+
+    app = Window(wind)
     app.widgets()
+
     
     
     

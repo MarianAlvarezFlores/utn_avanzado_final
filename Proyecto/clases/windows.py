@@ -34,7 +34,20 @@ class Window(Frame, Subject):
         self.searchbar = ttk.Entry(self.master)
         self.searchbar.place(relx=0.05, rely=0.90, relwidth=0.75, relheight=0.05)
 
-        self.tree = ttk.Treeview(self.master, columns=("Nombre", "Tipo 1", "Tipo 2", "Categoría", "Habilidad", "Info"), show="headings")
+        frame_tree = Frame(self.master)
+        frame_tree.place(relx=0.05, rely=0.15, relwidth=0.9, relheight=0.75)
+
+        scroll_y = ttk.Scrollbar(frame_tree, orient="vertical")
+        scroll_y.pack(side="right", fill="y")
+
+        self.tree = ttk.Treeview(frame_tree, 
+                                columns=("Nombre", "Tipo 1", "Tipo 2", "Categoría", "Habilidad", "Info"), 
+                                show="headings",
+                                yscrollcommand=scroll_y.set
+                                )
+
+        scroll_y.config(command=self.tree.yview)
+
         self.tree.heading("Nombre", text="Nombre")
         self.tree.heading("Tipo 1", text="Tipo 1")
         self.tree.heading("Tipo 2", text="Tipo 2")

@@ -9,7 +9,7 @@ global PORT
 
 class MyUDPHandler(socketserver.BaseRequestHandler):
     def handle(self):
-        print("hola 1")
+        print("Bienvenido a la Pokédex")
         data = self.request[0].strip()
         socket = self.request[1]
 

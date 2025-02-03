@@ -8,19 +8,7 @@ from clases.pokemon import Pokemon, mostrar_mensaje
 import io
 from functools import wraps
 from clases.observador import Subject, PokemonCollection
-import os, sys
 
-from pathlib import Path
-import subprocess
-import threading
-import time
-import datetime
-import socket
-import secrets
-import pprint
-import binascii
-
-theprocess=""
 
 class Window(Frame, Subject):
     global_image_blob=None
@@ -30,8 +18,6 @@ class Window(Frame, Subject):
         self.master = master        
         self.pack()
         self.widgets()
-        self.raiz = Path(file).resolve().parent
-        self.ruta_server = os.path.join(self.raiz, 'src', 'servidor', 'udp_server_t.py')
         
 
     def widgets(self):
@@ -86,7 +72,7 @@ class Window(Frame, Subject):
         entry_ability = tkinter.Entry(new_window)
         entry_ability.grid(row=7, column=1, padx=10, pady=5)
         
-        button_image =  tkinter.Button(new_window,text='Cargar imagen',command = lambda: self.guardar_imagen_en_bd(new_window))
+        button_image = tkinter.Button(new_window,text='Cargar imagen',command = lambda: self.guardar_imagen_en_bd(new_window))
         button_image.grid(row=8,column=1,padx=10,pady=5)
         
         label_nombre = tkinter.Label(new_window, text="Nombre:")
@@ -209,10 +195,10 @@ class Window(Frame, Subject):
         if not data_grid:
             messagebox.showerror("Error", "No se pudo obtener la información del Pokémon.")
             return
-        #print(pokemon_data[0])
+        print(pokemon_data[0])
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Modificar Pokémon")
-        new_window.geometry("280x350")
+        new_window.geometry("340x450")
 
         entry_nombre = tkinter.Entry(new_window)
         entry_nombre.grid(row=1, column=2, padx=10, pady=5)
@@ -223,8 +209,6 @@ class Window(Frame, Subject):
         entry_ability = tkinter.Entry(new_window)
         entry_ability.grid(row=3, column=2, padx=10, pady=5)
         entry_ability.insert(0, pokemon_data[3])
-       
-        
         entry_type = ttk.Combobox(new_window, values=types, state='readonly')
         entry_type.grid(row=4, column=2, padx=10, pady=5)
         entry_type.set(pokemon_data[4])
@@ -257,15 +241,18 @@ class Window(Frame, Subject):
         button_image.grid(row=8, column=1, columnspan=2, padx=15, pady=5)
 
         def guardar_cambios():
+            if not hasattr(self, "global_image_blob") or self.global_image_blob is None:
+                self.global_image_blob = pokemon_data[8]
+
             pokemon.modificar_pokemon(
-            entry_nombre.get().strip(),
-            entry_numero.get().strip(),
-            entry_ability.get().strip(),
-            entry_type.get().strip(),
-            entry_type2.get().strip(),
-            entry_info.get().strip(),
-            entry_category.get().strip(),
-            self.global_image_blob
+                entry_nombre.get().strip(),
+                entry_numero.get().strip(),
+                entry_ability.get().strip(),
+                entry_type.get().strip(),
+                entry_type2.get().strip(),
+                entry_info.get().strip(),
+                entry_category.get().strip(),
+                self.global_image_blob
             )
             new_window.destroy()
             self.load_grid()
@@ -305,27 +292,3 @@ class Window(Frame, Subject):
                 image_label.pack(pady=10)
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo cargar la imagen: {e}")
-    
-    def try_connection(self, ): 
-
-        if theprocess != "":
-            theprocess.kill()
-            threading.Thread(target=self.lanzar_servidor, args=(True,), daemon=True).start()
-        else:
-            threading.Thread(target=self.lanzar_servidor, args=(True,), daemon=True).start()
-
-    def lanzar_servidor(self, var):
-
-        the_path =  self.ruta_server
-        if var==True:
-            global theprocess
-            theprocess = subprocess.Popen([sys.executable, the_path])
-            theprocess.communicate()
-        else:
-            print("")
-
-    def stop_server(self, ):
-
-        global theprocess
-        if theprocess !="":
-            theprocess.kill()

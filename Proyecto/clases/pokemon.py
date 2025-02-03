@@ -85,7 +85,7 @@ class Pokemon (Subject):
             return {"mensaje": f"El Pokémon {nombre} no existe en la Pokédex."}
 
     @mostrar_mensaje(tipo="info", titulo="Resultado de la modificación")
-    def modificar_pokemon(self, nombre, numero, tipo, tipo2, info, categoria, habilidad, global_image_blob):
+    def modificar_pokemon(self, nombre, numero, habilidad, tipo, tipo2, info, categoria, global_image_blob):
         database = Database()
 
         if not re.match(r"^[A-Za-z\s]+$", nombre):
@@ -100,9 +100,9 @@ class Pokemon (Subject):
         if pokemon_existe:
             database.cursor.execute('''
                 UPDATE pokemon
-                SET numero = ?, type = ?, type2 = ?, info = ?, category = ?, ability = ?, imagen = ?
+                SET numero = ?, ability = ?, type = ?, type2 = ?, info = ?, category = ?,  imagen = ?
                 WHERE nombre = ?
-            ''', (numero, tipo, tipo2, info, categoria, habilidad, global_image_blob, nombre))
+            ''', (numero, habilidad, tipo, tipo2, info, categoria, global_image_blob, nombre))
             database.conexion.commit()
             return {"mensaje": f"{nombre} fue modificado correctamente."}
         else:

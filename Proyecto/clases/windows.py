@@ -195,7 +195,7 @@ class Window(Frame, Subject):
         if not data_grid:
             messagebox.showerror("Error", "No se pudo obtener la información del Pokémon.")
             return
-        print(pokemon_data[0])
+        #print(pokemon_data[0])
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Modificar Pokémon")
         new_window.geometry("340x450")

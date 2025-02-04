@@ -213,7 +213,7 @@ class Window(Frame, Subject):
         #print(pokemon_data[0])
         new_window = tkinter.Toplevel(self.master)
         new_window.title("Modificar Pokémon")
-        new_window.geometry("340x450")
+        new_window.geometry("280x320")
         new_window.iconbitmap("media/Pokeball.ico")
 
         entry_nombre = tkinter.Entry(new_window)

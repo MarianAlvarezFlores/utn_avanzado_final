@@ -33,6 +33,7 @@ class Window(Frame, Subject):
 
         self.searchbar = ttk.Entry(self.master)
         self.searchbar.place(relx=0.05, rely=0.90, relwidth=0.75, relheight=0.05)
+        self.searchbar.bind("<Return>", lambda event: self.buscar_pokemon())
 
         frame_tree = Frame(self.master)
         frame_tree.place(relx=0.05, rely=0.15, relwidth=0.9, relheight=0.75)

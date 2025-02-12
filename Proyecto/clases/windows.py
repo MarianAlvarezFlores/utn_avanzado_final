@@ -24,7 +24,7 @@ class Window(Frame, Subject):
         self.button1 = Button(self.master, text="AGREGAR", fg="black", command=self.agregar_pokemon)
         self.button2 = Button(self.master, text="MODIFICAR", fg="black", command=self.modificar_pokemon)
         self.button3 = Button(self.master, text="ELIMINAR", fg="black", command=self.eliminar_pokemon)
-        self.button4 = Button(self.master, text="BUSCAR", fg="black", command=self.buscar_pokemon)
+        self.button4 = Button(self.master, text="🔎 BUSCAR", fg="black", command=self.buscar_pokemon)
 
         self.button1.place(relx=0.05, rely=0.05, relwidth=0.125, relheight=0.05)
         self.button2.place(relx=0.425, rely=0.05, relwidth=0.125, relheight=0.05)
@@ -34,6 +34,7 @@ class Window(Frame, Subject):
         self.searchbar = ttk.Entry(self.master)
         self.searchbar.place(relx=0.05, rely=0.90, relwidth=0.75, relheight=0.05)
         self.searchbar.bind("<Return>", lambda event: self.buscar_pokemon())
+        self.searchbar.bind("<KeyRelease>", self.filtrar_pokemon)
 
         frame_tree = Frame(self.master)
         frame_tree.place(relx=0.05, rely=0.15, relwidth=0.9, relheight=0.75)
@@ -309,3 +310,16 @@ class Window(Frame, Subject):
                 image_label.pack(pady=10)
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo cargar la imagen: {e}")
+
+    def filtrar_pokemon(self, event=None):
+        search_text = self.searchbar.get().strip().lower()
+
+        pokemon = Pokemon()
+        pokemons = pokemon.get_pokemons()
+
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        for poke in pokemons:
+            if search_text in poke[0].lower():
+                self.tree.insert("", "end", values=poke)
